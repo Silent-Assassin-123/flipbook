@@ -11,6 +11,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const shareCard = document.getElementById('share-card');
     const shareUrlInput = document.getElementById('share-url');
     const copyBtn = document.getElementById('copy-btn');
+    
+    const mobileNav = document.getElementById('mobile-nav');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const pageCounter = document.getElementById('page-counter');
 
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
@@ -113,10 +118,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         flipBook.innerHTML = '';
 
         const pixelRatio = window.devicePixelRatio || 2.0;
+        let baseWidth = 550;
+        let baseHeight = 733;
 
         for (let i = 1; i <= totalPages; i++) {
             const page = await pdf.getPage(i);
             const viewport = page.getViewport({ scale: pixelRatio });
+            
+            if (i === 1) {
+                const unscaledViewport = page.getViewport({ scale: 1.0 });
+                baseWidth = unscaledViewport.width;
+                baseHeight = unscaledViewport.height;
+            }
 
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
@@ -131,9 +144,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             flipBook.appendChild(pageDiv);
         }
 
+        mobileNav.style.display = 'flex';
+
         const pageFlip = new St.PageFlip(flipBook, {
-            width: 550,
-            height: 733,
+            width: baseWidth,
+            height: baseHeight,
             size: 'stretch',
             minWidth: 280,
             maxWidth: 1000,
@@ -143,9 +158,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             showCover: true,
             usePortrait: true,
             mobileScrollSupport: true,
-            maxShadowOpacity: 0.5
+            swipeDistance: 10,
+            flippingTime: 700,
+            maxShadowOpacity: 0.3
         });
 
         pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+
+        prevBtn.addEventListener('click', () => {
+            pageFlip.flipPrev();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            pageFlip.flipNext();
+        });
+
+        pageFlip.on('flip', (e) => {
+            pageCounter.textContent = `Page ${e.data + 1} of ${totalPages}`;
+        });
     }
 });
