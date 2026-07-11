@@ -183,7 +183,7 @@ input[type="file"] {
 .book-wrapper {
     display: none;
     width: 100%;
-    height: 70vh;
+    height: calc(100vh - 200px);
     justify-content: center;
     align-items: center;
     perspective: 2000px;
@@ -204,7 +204,7 @@ input[type="file"] {
 .page canvas {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    display: block; 
 }
 
 .mobile-nav {
@@ -213,7 +213,7 @@ input[type="file"] {
     max-width: 500px;
     justify-content: space-between;
     align-items: center;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     background: #1e293b;
     padding: 1rem;
     border-radius: 12px;
@@ -253,15 +253,26 @@ input[type="file"] {
 
 @media (max-width: 768px) {
     .app-container {
-        padding: 1rem;
+        padding: 1rem 0; 
+    }
+    
+    .header {
+        margin-bottom: 1rem;
     }
     
     .header h1 {
-        font-size: 2rem;
+        font-size: 1.75rem;
     }
 
     .upload-card {
         padding: 2rem 1.5rem;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .share-card {
+        width: 90%;
+        margin: 0 auto 1rem auto;
     }
 
     .share-input-group {
@@ -273,7 +284,12 @@ input[type="file"] {
     }
     
     .book-wrapper {
-        height: 65vh;
-        margin-top: 1rem;
+        height: calc(100vh - 160px);
+        width: 100vw;
+    }
+    
+    .mobile-nav {
+        width: 90%;
+        margin: 1rem auto;
     }
 }
