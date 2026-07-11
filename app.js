@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const shareUrlInput = document.getElementById('share-url');
     const copyBtn = document.getElementById('copy-btn');
     
-    const mobileNav = document.getElementById('mobile-nav');
+    const bookNav = document.getElementById('book-nav');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const pageCounter = document.getElementById('page-counter');
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!file || file.type !== 'application/pdf') return;
 
         uploadBtn.style.display = 'none';
-        loadingState.style.display = 'flex';
+        loadingState.style.display = 'block';
 
         try {
             const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
@@ -111,27 +111,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadingState.style.display = 'none';
         bookWrapper.style.display = 'flex';
         
-        // Trigger Immersive Reading Mode to maximize screen space
-        document.body.classList.add('reading-mode');
-        
         const pdf = await pdfjsLib.getDocument(url).promise;
         const totalPages = pdf.numPages;
 
         flipBook.innerHTML = '';
 
-        const pixelRatio = window.devicePixelRatio || 2.0;
-        let baseWidth = 550;
-        let baseHeight = 733;
-
         for (let i = 1; i <= totalPages; i++) {
             const page = await pdf.getPage(i);
-            const viewport = page.getViewport({ scale: pixelRatio });
-            
-            if (i === 1) {
-                const unscaledViewport = page.getViewport({ scale: 1.0 });
-                baseWidth = unscaledViewport.width;
-                baseHeight = unscaledViewport.height;
-            }
+            const viewport = page.getViewport({ scale: 2.0 });
 
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
@@ -146,23 +133,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             flipBook.appendChild(pageDiv);
         }
 
-        mobileNav.style.display = 'flex';
+        bookNav.style.display = 'flex';
 
         const pageFlip = new St.PageFlip(flipBook, {
-            width: baseWidth,
-            height: baseHeight,
+            width: 550,
+            height: 733,
             size: 'stretch',
-            minWidth: 100,
-            maxWidth: 5000, 
-            minHeight: 100,
-            maxHeight: 5000,
+            minWidth: 315,
+            maxWidth: 1000,
+            minHeight: 420,
+            maxHeight: 1350,
             drawShadow: true,
             showCover: true,
-            usePortrait: true,
-            mobileScrollSupport: true,
-            swipeDistance: 10,
-            flippingTime: 700,
-            maxShadowOpacity: 0.3
+            mobileScrollSupport: false,
+            maxShadowOpacity: 0.5
         });
 
         pageFlip.loadFromHTML(document.querySelectorAll('.page'));
