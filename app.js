@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+    const SUPABASE_URL = 'https://hxdagxcknmufpqoywmdn.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_QAGi1O6Vugv3jk7Bn6NcdQ_wtKj6OyF';
 
     const uploadBtn = document.getElementById('upload-btn');
     const fileInput = document.getElementById('file-input');
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
     let supabase;
-    if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_URL !== '') {
+    if (SUPABASE_URL !== 'https://hxdagxcknmufpqoywmdn.supabase.co' && SUPABASE_URL !== '') {
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     }
 
