@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: #0f172a;
+    background-color: #18181b;
     color: #f8fafc;
     min-height: 100vh;
     display: flex;
@@ -33,14 +33,14 @@ body {
     font-size: 2.5rem;
     font-weight: 600;
     letter-spacing: -0.02em;
-    background: linear-gradient(to right, #60a5fa, #60a5fa);
+    background: linear-gradient(to right, #f97316, #f97316);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .share-card {
-    background: #1e293b;
-    border: 1px solid #334155;
+    background: #ffdbbb;
+    border: 1px solid #000000;
     border-radius: 12px;
     padding: 1.5rem;
     width: 100%;
@@ -113,8 +113,8 @@ input[type="file"] {
 }
 
 .primary-btn {
-    background: #3b82f6;
-    color: #ffffff;
+    background: #ffdbbb;
+    color: #000000;
     border: none;
     padding: 0.875rem 2rem;
     border-radius: 8px;
@@ -126,7 +126,7 @@ input[type="file"] {
 }
 
 .primary-btn:hover {
-    background: #2563eb;
+    background: #18181b;
 }
 
 .primary-btn:active {
