@@ -111,6 +111,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         loadingState.style.display = 'none';
         bookWrapper.style.display = 'flex';
         
+        // Trigger Immersive Reading Mode to maximize screen space
+        document.body.classList.add('reading-mode');
+        
         const pdf = await pdfjsLib.getDocument(url).promise;
         const totalPages = pdf.numPages;
 
@@ -148,7 +151,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const pageFlip = new St.PageFlip(flipBook, {
             width: baseWidth,
             height: baseHeight,
-            size: 'stretch', // Reverted to valid parameter
+            size: 'stretch',
             minWidth: 100,
             maxWidth: 5000, 
             minHeight: 100,
