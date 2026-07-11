@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const SUPABASE_URL = 'https://hxdagxcknmufpqoywmdn.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_QAGi1O6Vugv3jk7Bn6NcdQ_wtKj6OyF';
-
+    console.log("My URL is:", SUPABASE_URL);
     const uploadBtn = document.getElementById('upload-btn');
     const fileInput = document.getElementById('file-input');
     const uploadCard = document.getElementById('upload-card');
