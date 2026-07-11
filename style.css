@@ -163,3 +163,51 @@ input[type="file"] {
         height: 85vh;
     }
 }
+.share-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 2rem;
+    text-align: center;
+    animation: fadeIn 0.4s ease;
+}
+
+.share-card p {
+    color: #94a3b8;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.share-input-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.share-input-group input {
+    flex: 1;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #f8fafc;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.secondary-btn {
+    background: #475569;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.secondary-btn:hover {
+    background: #64748b;
+}
