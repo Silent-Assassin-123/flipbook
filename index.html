@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Interactive Flipbook Viewer</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
             <h1>Document Viewer</h1>
         </header>
 
-        <div class="share-card" id="share-card" style="display: none;">
+        <div class="share-card" id="share-card">
             <p>Share this flipbook:</p>
             <div class="share-input-group">
                 <input type="text" id="share-url" readonly>
@@ -29,7 +29,7 @@
                 <h2>Upload your Document</h2>
                 <p>Select a PDF to generate an interactive 3D flipbook.</p>
                 <button class="primary-btn" id="upload-btn">Browse Files</button>
-                <input type="file" id="file-input" accept="application/pdf" style="width: 0.1px; height: 0.1px; opacity: 0; overflow: hidden; position: absolute; z-index: -1;">
+                <input type="file" id="file-input" accept="application/pdf">
                 <div class="loading-state" id="loading-state">
                     <div class="spinner"></div>
                     <span>Processing document...</span>
@@ -39,6 +39,12 @@
 
         <div id="book-wrapper" class="book-wrapper">
             <div class="flip-book" id="flip-book"></div>
+        </div>
+
+        <div class="mobile-nav" id="mobile-nav">
+            <button id="prev-btn" class="nav-btn">← Prev</button>
+            <span id="page-counter">Page 1</span>
+            <button id="next-btn" class="nav-btn">Next →</button>
         </div>
     </div>
 
