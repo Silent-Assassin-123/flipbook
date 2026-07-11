@@ -16,12 +16,20 @@
             <h1>Document Viewer</h1>
         </header>
 
+        <div class="share-card" id="share-card" style="display: none;">
+            <p>Share this flipbook:</p>
+            <div class="share-input-group">
+                <input type="text" id="share-url" readonly>
+                <button id="copy-btn" class="secondary-btn">Copy</button>
+            </div>
+        </div>
+
         <div class="upload-card" id="upload-card">
             <div class="upload-content">
                 <h2>Upload your Document</h2>
                 <p>Select a PDF to generate an interactive 3D flipbook.</p>
                 <button class="primary-btn" id="upload-btn">Browse Files</button>
-                <input type="file" id="file-input" accept="application/pdf">
+                <input type="file" id="file-input" accept="application/pdf" style="width: 0.1px; height: 0.1px; opacity: 0; overflow: hidden; position: absolute; z-index: -1;">
                 <div class="loading-state" id="loading-state">
                     <div class="spinner"></div>
                     <span>Processing document...</span>
