@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const SUPABASE_URL = 'https://hxdagxcknmufpqoywmdn.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_QAGi1O6Vugv3jk7Bn6NcdQ_wtKj6OyF';
-    console.log("My URL is:", SUPABASE_URL);
+    const SUPABASE_URL = 'https://YOUR_ACTUAL_URL.supabase.co';
+    const SUPABASE_ANON_KEY = 'YOUR_ACTUAL_KEY';
+
     const uploadBtn = document.getElementById('upload-btn');
     const fileInput = document.getElementById('file-input');
     const uploadCard = document.getElementById('upload-card');
@@ -15,42 +15,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
     let supabase;
-    if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_URL !== '') {
+    if (SUPABASE_URL && SUPABASE_URL.startsWith('http')) {
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     }
 
-    // ROUTING ENGINE: Check for an ID in the URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const bookId = urlParams.get('book');
 
     if (bookId && supabase) {
         try {
-            const { data: document, error } = await supabase
+            const { data: documentData, error } = await supabase
                 .from('pdf_documents')
                 .select('file_url')
                 .eq('id', bookId)
                 .single();
 
-            if (document && !error) {
+            if (documentData && !error) {
                 uploadCard.style.display = 'none';
-                await buildRenderPipeline(document.file_url);
+                await buildRenderPipeline(documentData.file_url);
                 return;
             } else {
                 alert('Document not found or link has expired.');
             }
         } catch (err) {
-            console.error("Routing failed:", err);
+            console.error(err);
         }
     }
 
-    // UPLOAD LOGIC
     uploadBtn.addEventListener('click', () => {
         fileInput.click();
     });
 
     fileInput.addEventListener('change', async (event) => {
         if (!supabase) {
-            alert('Backend connection missing. Configure your Supabase credentials.');
+            alert('Backend connection missing.');
             return;
         }
 
@@ -58,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!file || file.type !== 'application/pdf') return;
 
         uploadBtn.style.display = 'none';
-        loadingState.style.display = 'block';
+        loadingState.style.display = 'flex';
 
         try {
             const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
@@ -75,7 +73,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const fileUrl = publicUrlData.publicUrl;
 
-            // Save to DB and instantly return the newly generated UUID
             const { data: insertData, error: dbError } = await supabase
                 .from('pdf_documents')
                 .insert([{ title: file.name, file_url: fileUrl }])
@@ -84,7 +81,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (dbError) throw new Error('Database registry failed.');
 
-            // Generate the shareable URL and update the UI
             const shareableLink = `${window.location.origin}${window.location.pathname}?book=${insertData.id}`;
             shareUrlInput.value = shareableLink;
             shareCard.style.display = 'block';
@@ -106,9 +102,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         setTimeout(() => copyBtn.textContent = 'Copy', 2000);
     });
 
-    // RENDERING ENGINE
     async function buildRenderPipeline(url) {
         uploadCard.style.display = 'none';
+        loadingState.style.display = 'none';
         bookWrapper.style.display = 'flex';
         
         const pdf = await pdfjsLib.getDocument(url).promise;
@@ -116,9 +112,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         flipBook.innerHTML = '';
 
+        const pixelRatio = window.devicePixelRatio || 2.0;
+
         for (let i = 1; i <= totalPages; i++) {
             const page = await pdf.getPage(i);
-            const viewport = page.getViewport({ scale: 2.0 });
+            const viewport = page.getViewport({ scale: pixelRatio });
 
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
@@ -137,13 +135,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             width: 550,
             height: 733,
             size: 'stretch',
-            minWidth: 315,
+            minWidth: 280,
             maxWidth: 1000,
-            minHeight: 420,
+            minHeight: 380,
             maxHeight: 1350,
             drawShadow: true,
             showCover: true,
-            mobileScrollSupport: false,
+            usePortrait: true,
+            mobileScrollSupport: true,
             maxShadowOpacity: 0.5
         });
 
