@@ -49,6 +49,7 @@ body {
     max-width: 600px;
     margin-bottom: 2rem;
     text-align: center;
+    display: none;
     animation: fadeIn 0.4s ease;
 }
 
@@ -182,7 +183,7 @@ input[type="file"] {
 .book-wrapper {
     display: none;
     width: 100%;
-    height: 80vh;
+    height: 70vh;
     justify-content: center;
     align-items: center;
     perspective: 2000px;
@@ -204,6 +205,41 @@ input[type="file"] {
     width: 100%;
     height: 100%;
     object-fit: contain;
+}
+
+.mobile-nav {
+    display: none;
+    width: 100%;
+    max-width: 500px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    background: #1e293b;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    animation: fadeIn 0.4s ease;
+}
+
+.nav-btn {
+    background: #3b82f6;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.nav-btn:hover {
+    background: #2563eb;
+}
+
+#page-counter {
+    color: #f8fafc;
+    font-weight: 500;
+    font-size: 0.95rem;
 }
 
 @keyframes spin {
@@ -237,7 +273,7 @@ input[type="file"] {
     }
     
     .book-wrapper {
-        height: 70vh;
+        height: 65vh;
         margin-top: 1rem;
     }
 }
