@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const SUPABASE_URL = 'https://hxdagxcknmufpqoywmdn.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_QAGi1O6Vugv3jk7Bn6NcdQ_wtKj6OyF';
-
     const uploadBtn = document.getElementById('upload-btn');
     const fileInput = document.getElementById('file-input');
     const uploadCard = document.getElementById('upload-card');
@@ -149,11 +148,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const pageFlip = new St.PageFlip(flipBook, {
             width: baseWidth,
             height: baseHeight,
-            size: 'stretch',
-            minWidth: 280,
-            maxWidth: 1000,
-            minHeight: 380,
-            maxHeight: 1350,
+            size: 'fit', // Allows the engine to scale precisely to container limits
+            minWidth: 100,
+            maxWidth: 5000, // Unrestricted scaling boundary
+            minHeight: 100,
+            maxHeight: 5000, // Unrestricted scaling boundary
             drawShadow: true,
             showCover: true,
             usePortrait: true,
