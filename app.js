@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const shareUrlInput = document.getElementById('share-url');
     const copyBtn = document.getElementById('copy-btn');
     
-    const bookNav = document.getElementById('book-nav');
+    const fixedNav = document.getElementById('fixed-nav');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const pageCounter = document.getElementById('page-counter');
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             flipBook.appendChild(pageDiv);
         }
 
-        bookNav.style.display = 'flex';
+        fixedNav.style.display = 'flex';
 
         const pageFlip = new St.PageFlip(flipBook, {
             width: 550,
