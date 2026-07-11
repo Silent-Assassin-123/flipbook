@@ -148,11 +148,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const pageFlip = new St.PageFlip(flipBook, {
             width: baseWidth,
             height: baseHeight,
-            size: 'fit', // Allows the engine to scale precisely to container limits
+            size: 'stretch', // Reverted to valid parameter
             minWidth: 100,
-            maxWidth: 5000, // Unrestricted scaling boundary
+            maxWidth: 5000, 
             minHeight: 100,
-            maxHeight: 5000, // Unrestricted scaling boundary
+            maxHeight: 5000,
             drawShadow: true,
             showCover: true,
             usePortrait: true,
