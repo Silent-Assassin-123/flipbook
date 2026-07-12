@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const fixedNav = document.getElementById('fixed-nav');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
+    const playToggleBtn = document.getElementById('play-toggle-btn');
     const pageCounter = document.getElementById('page-counter');
 
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
@@ -151,6 +152,35 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         pageFlip.loadFromHTML(document.querySelectorAll('.page'));
 
+        let autoplayInterval = null;
+        let isAutoplay = false;
+
+        playToggleBtn.addEventListener('click', () => {
+            if (isAutoplay) {
+                clearInterval(autoplayInterval);
+                isAutoplay = false;
+                playToggleBtn.innerHTML = '<i data-lucide="play"></i>';
+            } else {
+                isAutoplay = true;
+                playToggleBtn.innerHTML = '<i data-lucide="pause"></i>';
+                
+                autoplayInterval = setInterval(() => {
+                    const prevPage = pageFlip.getCurrentPageIndex();
+                    pageFlip.flipNext();
+                    
+                    setTimeout(() => {
+                        if (pageFlip.getCurrentPageIndex() === prevPage) {
+                            clearInterval(autoplayInterval);
+                            isAutoplay = false;
+                            playToggleBtn.innerHTML = '<i data-lucide="play"></i>';
+                            lucide.createIcons();
+                        }
+                    }, 500);
+                }, 5000);
+            }
+            lucide.createIcons();
+        });
+
         prevBtn.addEventListener('click', () => {
             pageFlip.flipPrev();
         });
@@ -162,5 +192,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         pageFlip.on('flip', (e) => {
             pageCounter.textContent = `Page ${e.data + 1} of ${totalPages}`;
         });
+
+        lucide.createIcons();
     }
 });
