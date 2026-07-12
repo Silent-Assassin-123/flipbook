@@ -14,11 +14,12 @@
 <body>
     <div class="app-container">
         <header class="header">
+            <span class="eyebrow">The Digital Edition</span>
             <h1>ARDOR</h1>
         </header>
 
         <div class="share-card" id="share-card">
-            <p>Share this flipbook:</p>
+            <p>Share this publication</p>
             <div class="share-input-group">
                 <input type="text" id="share-url" readonly>
                 <button id="copy-btn" class="secondary-btn">Copy</button>
@@ -27,13 +28,13 @@
 
         <div class="upload-card" id="upload-card">
             <div class="upload-content">
-                <h2>Upload your Document</h2>
-                <p>Select a PDF to generate an interactive 3D flipbook.</p>
+                <h2>Upload Manuscript</h2>
+                <p>Select a PDF document to generate the interactive editorial interface.</p>
                 <button class="primary-btn" id="upload-btn">Browse Files</button>
                 <input type="file" id="file-input" accept="application/pdf">
                 <div class="loading-state" id="loading-state">
                     <div class="spinner"></div>
-                    <span>Processing document...</span>
+                    <span>Rendering...</span>
                 </div>
             </div>
         </div>
@@ -48,10 +49,7 @@
         <button id="play-toggle-btn" class="nav-btn"><i data-lucide="play"></i></button>
         <span id="page-counter">Page 1</span>
         <button id="next-btn" class="nav-btn"><i data-lucide="chevron-right"></i></button>
-        <button id="fullscreen-btn" class="nav-btn"><i data-lucide="maximize"></i></button>
     </div>
-
-    <button id="exit-fullscreen-btn" class="exit-fs-btn">Exit Full Screen</button>
 
     <script src="app.js"></script>
 </body>
