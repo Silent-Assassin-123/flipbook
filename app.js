@@ -116,25 +116,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         const totalPages = pdf.numPages;
 
         flipBook.innerHTML = '';
+        const renderedStatus = new Array(totalPages).fill(false);
 
         for (let i = 1; i <= totalPages; i++) {
-            const page = await pdf.getPage(i);
-            const viewport = page.getViewport({ scale: 2.0 });
-
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = viewport.width;
-            canvas.height = viewport.height;
-
-            await page.render({ canvasContext: ctx, viewport: viewport }).promise;
-
             const pageDiv = document.createElement('div');
             pageDiv.className = 'page';
-            pageDiv.appendChild(canvas);
+            pageDiv.setAttribute('data-page-index', i);
             flipBook.appendChild(pageDiv);
         }
 
         fixedNav.style.display = 'flex';
+        pageCounter.textContent = `PAGE 1 OF ${totalPages}`;
 
         const pageFlip = new St.PageFlip(flipBook, {
             width: 550,
@@ -150,7 +142,50 @@ document.addEventListener('DOMContentLoaded', async () => {
             maxShadowOpacity: 0.5
         });
 
-        pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+        pageFlip.loadFromHTML(document.querySelectorAll('.flip-book .page'));
+
+        async function renderPageChunk(pageIndex) {
+            if (pageIndex < 1 || pageIndex > totalPages || renderedStatus[pageIndex - 1]) return;
+            renderedStatus[pageIndex - 1] = true;
+
+            const pageElement = document.querySelectorAll('.flip-book .page')[pageIndex - 1];
+            
+            try {
+                const page = await pdf.getPage(pageIndex);
+                const viewport = page.getViewport({ scale: 1.5 });
+                
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                
+                await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                
+                pageElement.appendChild(canvas);
+                pageElement.classList.add('rendered-state');
+            } catch (err) {
+                renderedStatus[pageIndex - 1] = false;
+                console.error(err);
+            }
+        }
+
+        async function orchestrateBuffer(currentIndex) {
+            const logicalPage = currentIndex + 1;
+            
+            for (let i = 0; i < 4; i++) {
+                await renderPageChunk(logicalPage + i);
+            }
+            
+            for (let i = 1; i <= 4; i++) {
+                await renderPageChunk(logicalPage - i);
+            }
+
+            for (let i = 4; i < 8; i++) {
+                renderPageChunk(logicalPage + i);
+            }
+        }
+
+        await orchestrateBuffer(0);
 
         let autoplayInterval = null;
         let isAutoplay = false;
@@ -190,7 +225,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         pageFlip.on('flip', (e) => {
-            pageCounter.textContent = `PAGE ${e.data + 1} OF ${totalPages}`;
+            const currentIndex = e.data;
+            pageCounter.textContent = `PAGE ${currentIndex + 1} OF ${totalPages}`;
+            orchestrateBuffer(currentIndex);
         });
 
         lucide.createIcons();
