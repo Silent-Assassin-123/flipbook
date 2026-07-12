@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>9B Class Magazine - Ardor</title>
+    <title>Ardor | Digital Magazine</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
@@ -13,7 +14,7 @@
 <body>
     <div class="app-container">
         <header class="header">
-            <h1>Ardor</h1>
+            <h1>ARDOR</h1>
         </header>
 
         <div class="share-card" id="share-card">
@@ -43,9 +44,10 @@
     </div>
 
     <div class="fixed-nav" id="fixed-nav">
-        <button id="prev-btn" class="nav-btn">←</button>
+        <button id="prev-btn" class="nav-btn"><i data-lucide="chevron-left"></i></button>
+        <button id="play-toggle-btn" class="nav-btn play-btn"><i data-lucide="play"></i></button>
         <span id="page-counter">Page 1</span>
-        <button id="next-btn" class="nav-btn">→</button>
+        <button id="next-btn" class="nav-btn"><i data-lucide="chevron-right"></i></button>
     </div>
 
     <script src="app.js"></script>
