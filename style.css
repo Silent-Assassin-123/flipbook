@@ -255,6 +255,32 @@ input[type="file"] {
     text-align: center;
 }
 
+.exit-fs-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: #f97316;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 2000;
+    display: none;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.exit-fs-btn:hover {
+    background: #ea580c;
+}
+
+.exit-fs-btn:active {
+    transform: scale(0.95);
+}
+
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
@@ -281,5 +307,10 @@ input[type="file"] {
         bottom: 1.5rem;
         padding: 0.5rem;
         gap: 1rem;
+    }
+    
+    .exit-fs-btn {
+        bottom: 1.5rem;
+        right: 1.5rem;
     }
 }
