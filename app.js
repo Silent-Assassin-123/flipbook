@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const playToggleBtn = document.getElementById('play-toggle-btn');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const exitFullscreenBtn = document.getElementById('exit-fullscreen-btn');
     const pageCounter = document.getElementById('page-counter');
 
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
@@ -107,6 +109,33 @@ document.addEventListener('DOMContentLoaded', async () => {
         setTimeout(() => copyBtn.textContent = 'Copy', 2000);
     });
 
+    fullscreenBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => {
+                console.error(err.message);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    });
+
+    exitFullscreenBtn.addEventListener('click', () => {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+            exitFullscreenBtn.style.display = 'block';
+            fullscreenBtn.innerHTML = '<i data-lucide="minimize"></i>';
+        } else {
+            exitFullscreenBtn.style.display = 'none';
+            fullscreenBtn.innerHTML = '<i data-lucide="maximize"></i>';
+        }
+        lucide.createIcons();
+    });
+
     async function buildRenderPipeline(url) {
         uploadCard.style.display = 'none';
         loadingState.style.display = 'none';
@@ -165,17 +194,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 playToggleBtn.innerHTML = '<i data-lucide="pause"></i>';
                 
                 autoplayInterval = setInterval(() => {
-                    const prevPage = pageFlip.getCurrentPageIndex();
-                    pageFlip.flipNext();
+                    const orientation = pageFlip.getOrientation();
+                    const currentIndex = pageFlip.getCurrentPageIndex();
                     
-                    setTimeout(() => {
-                        if (pageFlip.getCurrentPageIndex() === prevPage) {
-                            clearInterval(autoplayInterval);
-                            isAutoplay = false;
-                            playToggleBtn.innerHTML = '<i data-lucide="play"></i>';
-                            lucide.createIcons();
-                        }
-                    }, 500);
+                    if (currentIndex >= totalPages - (orientation === 'landscape' ? 2 : 1)) {
+                        clearInterval(autoplayInterval);
+                        isAutoplay = false;
+                        playToggleBtn.innerHTML = '<i data-lucide="play"></i>';
+                        lucide.createIcons();
+                    } else {
+                        pageFlip.flipNext();
+                    }
                 }, 5000);
             }
             lucide.createIcons();
