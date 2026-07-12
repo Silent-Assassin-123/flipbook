@@ -15,8 +15,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const playToggleBtn = document.getElementById('play-toggle-btn');
-    const fullscreenBtn = document.getElementById('fullscreen-btn');
-    const exitFullscreenBtn = document.getElementById('exit-fullscreen-btn');
     const pageCounter = document.getElementById('page-counter');
 
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
@@ -63,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!file || file.type !== 'application/pdf') return;
 
         uploadBtn.style.display = 'none';
-        loadingState.style.display = 'block';
+        loadingState.style.display = 'flex';
 
         try {
             const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
@@ -105,54 +103,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     copyBtn.addEventListener('click', () => {
         shareUrlInput.select();
         document.execCommand('copy');
-        copyBtn.textContent = 'Copied!';
-        setTimeout(() => copyBtn.textContent = 'Copy', 2000);
+        copyBtn.textContent = 'COPIED';
+        setTimeout(() => copyBtn.textContent = 'COPY', 2000);
     });
-
-    function openFullscreenMode() {
-        const elem = document.documentElement;
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen().catch(() => {});
-        } else if (elem.webkitRequestFullscreen) {
-            elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-            elem.msRequestFullscreen();
-        }
-
-        document.body.classList.add('fullscreen-mode');
-        fixedNav.style.display = 'none';
-        exitFullscreenBtn.style.display = 'block';
-    }
-
-    function closeFullscreenMode() {
-        if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
-            if (document.exitFullscreen) {
-                document.exitFullscreen().catch(() => {});
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            }
-        }
-
-        document.body.classList.remove('fullscreen-mode');
-        fixedNav.style.display = 'flex';
-        exitFullscreenBtn.style.display = 'none';
-    }
-
-    fullscreenBtn.addEventListener('click', openFullscreenMode);
-    
-    exitFullscreenBtn.addEventListener('click', closeFullscreenMode);
-
-    const handleFullscreenChange = () => {
-        if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-            closeFullscreenMode();
-        }
-    };
-
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
 
     async function buildRenderPipeline(url) {
         uploadCard.style.display = 'none';
@@ -237,7 +190,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         pageFlip.on('flip', (e) => {
-            pageCounter.textContent = `Page ${e.data + 1} of ${totalPages}`;
+            pageCounter.textContent = `PAGE ${e.data + 1} OF ${totalPages}`;
         });
 
         lucide.createIcons();
