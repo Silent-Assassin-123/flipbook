@@ -11,6 +11,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    transition: background-color 0.3s ease;
 }
 
 .app-container {
@@ -178,6 +179,7 @@ input[type="file"] {
     justify-content: center;
     align-items: center;
     perspective: 1500px;
+    transition: height 0.3s ease;
 }
 
 .flip-book {
@@ -279,6 +281,23 @@ input[type="file"] {
 
 .exit-fs-btn:active {
     transform: scale(0.95);
+}
+
+body.fullscreen-mode {
+    background-color: #000000;
+}
+
+body.fullscreen-mode .header {
+    display: none;
+}
+
+body.fullscreen-mode .app-container {
+    padding: 0;
+    justify-content: center;
+}
+
+body.fullscreen-mode .book-wrapper {
+    height: 100vh;
 }
 
 @keyframes spin {
