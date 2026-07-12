@@ -52,7 +52,7 @@ body {
 }
 
 .share-card p {
-    color: #94a3b8;
+    color: #52525b;
     margin-bottom: 0.75rem;
     font-size: 0.9rem;
 }
@@ -64,8 +64,8 @@ body {
 
 .share-input-group input {
     flex: 1;
-    background: #0f172a;
-    border: 1px solid #334155;
+    background: #18181b;
+    border: 1px solid #3f3f46;
     color: #f8fafc;
     padding: 0.75rem 1rem;
     border-radius: 6px;
@@ -74,13 +74,13 @@ body {
 }
 
 .upload-card {
-    background: #1e293b;
-    border: 1px solid #334155;
+    background: #27272a;
+    border: 1px solid #3f3f46;
     border-radius: 16px;
     padding: 3rem;
     width: 100%;
     max-width: 500px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
 }
 
@@ -98,7 +98,7 @@ body {
 }
 
 .upload-content p {
-    color: #94a3b8;
+    color: #a1a1aa;
     font-size: 0.95rem;
     line-height: 1.5;
 }
@@ -115,18 +115,20 @@ input[type="file"] {
 .primary-btn {
     background: #ffdbbb;
     color: #000000;
-    border: none;
+    border: 1px solid transparent;
     padding: 0.875rem 2rem;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
     width: 100%;
 }
 
 .primary-btn:hover {
     background: #18181b;
+    color: #ffffff;
+    border-color: #ffdbbb;
 }
 
 .primary-btn:active {
@@ -134,7 +136,7 @@ input[type="file"] {
 }
 
 .secondary-btn {
-    background: #475569;
+    background: #3f3f46;
     color: #ffffff;
     border: none;
     padding: 0.75rem 1.5rem;
@@ -145,7 +147,7 @@ input[type="file"] {
 }
 
 .secondary-btn:hover {
-    background: #64748b;
+    background: #52525b;
 }
 
 .loading-state {
@@ -157,15 +159,15 @@ input[type="file"] {
 .spinner {
     width: 24px;
     height: 24px;
-    border: 3px solid #334155;
-    border-top-color: #3b82f6;
+    border: 3px solid #3f3f46;
+    border-top-color: #f97316;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 0 auto 0.75rem auto;
 }
 
 .loading-state span {
-    color: #60a5fa;
+    color: #f97316;
     font-size: 0.875rem;
 }
 
@@ -203,11 +205,11 @@ input[type="file"] {
     display: none;
     gap: 1.5rem;
     align-items: center;
-    background: rgba(30, 41, 59, 0.95);
+    background: rgba(24, 24, 27, 0.95);
     padding: 0.5rem 1rem;
     border-radius: 50px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    border: 1px solid #334155;
+    border: 1px solid #3f3f46;
     z-index: 1000;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -215,7 +217,7 @@ input[type="file"] {
 }
 
 .nav-btn {
-    background: #3b82f6;
+    background: #f97316;
     color: #ffffff;
     border: none;
     border-radius: 50%;
@@ -231,11 +233,18 @@ input[type="file"] {
 }
 
 .nav-btn:hover {
-    background: #2563eb;
+    background: #ea580c;
 }
 
 .nav-btn:active {
     transform: scale(0.95);
+}
+
+.nav-btn svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2.5;
+    display: block;
 }
 
 #page-counter {
