@@ -114,8 +114,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.documentElement.requestFullscreen().catch(err => {
                 console.error(err.message);
             });
-        } else {
-            document.exitFullscreen();
         }
     });
 
@@ -128,12 +126,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.addEventListener('fullscreenchange', () => {
         if (document.fullscreenElement) {
             exitFullscreenBtn.style.display = 'block';
-            fullscreenBtn.innerHTML = '<i data-lucide="minimize"></i>';
+            fixedNav.style.display = 'none';
+            document.body.classList.add('fullscreen-mode');
         } else {
             exitFullscreenBtn.style.display = 'none';
-            fullscreenBtn.innerHTML = '<i data-lucide="maximize"></i>';
+            fixedNav.style.display = 'flex';
+            document.body.classList.remove('fullscreen-mode');
         }
-        lucide.createIcons();
     });
 
     async function buildRenderPipeline(url) {
