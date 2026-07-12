@@ -109,31 +109,50 @@ document.addEventListener('DOMContentLoaded', async () => {
         setTimeout(() => copyBtn.textContent = 'Copy', 2000);
     });
 
-    fullscreenBtn.addEventListener('click', () => {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(err => {
-                console.error(err.message);
-            });
+    function openFullscreenMode() {
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen().catch(() => {});
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
         }
-    });
 
-    exitFullscreenBtn.addEventListener('click', () => {
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        }
-    });
+        document.body.classList.add('fullscreen-mode');
+        fixedNav.style.display = 'none';
+        exitFullscreenBtn.style.display = 'block';
+    }
 
-    document.addEventListener('fullscreenchange', () => {
-        if (document.fullscreenElement) {
-            exitFullscreenBtn.style.display = 'block';
-            fixedNav.style.display = 'none';
-            document.body.classList.add('fullscreen-mode');
-        } else {
-            exitFullscreenBtn.style.display = 'none';
-            fixedNav.style.display = 'flex';
-            document.body.classList.remove('fullscreen-mode');
+    function closeFullscreenMode() {
+        if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen().catch(() => {});
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
         }
-    });
+
+        document.body.classList.remove('fullscreen-mode');
+        fixedNav.style.display = 'flex';
+        exitFullscreenBtn.style.display = 'none';
+    }
+
+    fullscreenBtn.addEventListener('click', openFullscreenMode);
+    
+    exitFullscreenBtn.addEventListener('click', closeFullscreenMode);
+
+    const handleFullscreenChange = () => {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+            closeFullscreenMode();
+        }
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
 
     async function buildRenderPipeline(url) {
         uploadCard.style.display = 'none';
